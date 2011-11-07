@@ -16,6 +16,6 @@ setlocal comments=:#
 setlocal commentstring=#\ %s
 setlocal formatoptions-=t formatoptions+=croql
 
-let b:undo_ftplugin .= "|setl cms< com< fo<"
+let b:undo_ftplugin = "|setl cms< com< fo<"
 
 " vim:set sw=2:
