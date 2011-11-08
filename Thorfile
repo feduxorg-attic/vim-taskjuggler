@@ -1,28 +1,6 @@
-require 'rugged'
-
 module Vim::TaskJuggler
 
   syntax_path=File.expand_path('syntax' , File.dirname(__FILE__))
-
-  class Repository
-    attr_accessor :remote_path, :local_path
-
-    def initialize(remote_path = 'https://github.com/taskjuggler/TaskJuggler.git' ,
-                   local_path='.' 
-                  )
-      @remote_path = remote_path
-      @local_path  = local_path
-    end
-
-    def fetch
-      repo = Rugged::Repository.new(@local_path)
-      rem = Rugged::Remote.new(repo)
-      summry = rem.fetch([refs])
-
-    end
-
-
-  end
 
   class Default < Thor
 
@@ -39,17 +17,22 @@ module Vim::TaskJuggler
   )
 
   class Install < Thor
-    desc "extension [PATH]" , "Install vim extension to path (Default ~/.vim/bundle.available/vim-taskjuggler)"
-    def extension(path=File.expand_path'(~/.vim/bundle.available/vim-taskjuggler')
 
+    desc "extension [PATH]" , "Install vim extension to path (Default ~/.vim/bundle.available/vim-taskjuggler)"
+    def extension(remote_path = 'https://github.com/taskjuggler/TaskJuggler.git' , 
+                  local_path = File.expand_path'(~/.vim/bundle.available/vim-taskjuggler')
+                 )
+      sh "git clone #{remote_path} #{local_path}"
     end
 
-    desc "gem" , 
+    desc "gem" ,  "Install taskjuggler gem"
     def gem
-
+      sh "gem install taskjuggler"
     end
   end
 
   class Fetch < Thor
   end
 end
+
+Vim::TaskJuggler::Default.start
