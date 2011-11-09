@@ -96,8 +96,6 @@ module Vim
 
         run(%Q[tar -O -xf "#{result[0]}" data.tar.gz | tar -xz -C "#{tmpdir}" "#{syntax_file}"])
 
-        binding.pry
-
         unless Dir.exists?(extension_path)
           FileUtils.mkdir_p extension_path
         end
