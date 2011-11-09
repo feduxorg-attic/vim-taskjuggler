@@ -3,9 +3,8 @@
 
 require 'thor'
 require 'thor/group'
-require 'popen4'
+require 'open4'
 require 'tmpdir'
-require 'pry'
 require 'fileutils'
 require 'find'
 
@@ -14,6 +13,7 @@ module Vim
   module TaskJuggler
     module Cli
 
+      # Runs a command 
       def run(command, options = {})
         command.gsub!(/^\s+/, "")
 
@@ -27,6 +27,7 @@ module Vim
         raise_if_command_failed!(command_name(command), process_data)
       end
 
+      # checks if command exited with an error code -eq 0
       def raise_if_command_failed!(utility, process_data)
         unless process_data[:ignore_exit_codes].include?(process_data[:status].to_i)
           exception_string = "Failed to run \"#{ utility }\" on \"#{ RUBY_PLATFORM }\".\n\n" +
@@ -35,13 +36,14 @@ module Vim
           exception_string << "STDERR was:\n\n\s\s#{ process_data[:stderr].gsub("\n", "\n\s\s") }" unless process_data[:stderr].empty?
 
           raise RuntimeError, exception_string
-        else
-          info_string = "Everything ran fine!\n\n"
-          info_string << "STDOUT was:\n\n\s\s#{ process_data[:stdout].gsub("\n", "\n\s\s") }" unless process_data[:stdout].empty?
-          puts info_string
+#        else
+#          info_string = "Everything ran fine!\n\n"
+#          info_string << "STDOUT was:\n\n\s\s#{ process_data[:stdout].gsub("\n", "\n\s\s") }" unless process_data[:stdout].empty?
+#          puts info_string
         end
       end
 
+      #normalize command name
       def command_name(command)
         command.slice(0, command.index(/\s/)).split('/')[-1]
       end

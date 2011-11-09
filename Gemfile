@@ -3,7 +3,7 @@ source "http://rubygems.org"
 
 group :production do
   gem "thor"
-  gem "popen4"
+  gem "open4"
 end
 
 group :development do
