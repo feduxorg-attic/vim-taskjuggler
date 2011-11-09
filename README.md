@@ -14,3 +14,14 @@ the taskjuggler-repository (https://github.com/taskjuggler/TaskJuggler).
   * `ftdetect/tjp.vim`: Detect the filetype
   * `ftplugin/tjp.vim`: Setting options for the taskjuggler-language
   * `syntax/tjp.vim`: Syntax file 
+
+## USAGE
+
+```bash
+git clone <repo>
+cd <repo>
+bundle install
+./setup.rb install gem
+./setup.rb install extension
+./setup.rb install syntax_file
+```
